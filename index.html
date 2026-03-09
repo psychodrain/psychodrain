@@ -32,9 +32,9 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5); /* Полупрозрачный черный слой */
+            background: rgba(0, 0, 0, 0.4);
             z-index: 1;
-            pointer-events: none; /* Чтобы не мешало нажимать на ссылки */
+            pointer-events: none;
         }
 
         .container {
@@ -68,6 +68,7 @@
             display: flex;
             flex-direction: column;
             gap: 1rem;
+            margin-bottom: 2rem;
         }
 
         .social-link {
@@ -105,15 +106,97 @@
         .vkontakte { background: #4C75A3; }
         .soundcloud { background: #FF7700; }
         .twitter { background: #1DA1F2; }
+
+        /* Стили для контроллера громкости */
+        .volume-control {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .volume-control i {
+            color: #333;
+            font-size: 1.2rem;
+            width: 24px;
+        }
+
+        .volume-control i.fa-volume-high {
+            color: #0088cc;
+        }
+
+        .volume-slider {
+            flex: 1;
+            height: 6px;
+            -webkit-appearance: none;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            outline: none;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: #0088cc;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .volume-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
+            background: #0066a0;
+        }
+
+        .volume-slider::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            background: #0088cc;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid white;
+        }
+
+        .volume-percent {
+            min-width: 45px;
+            color: #333;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* Кнопка mute */
+        .mute-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            color: #333;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mute-btn:hover {
+            color: #0088cc;
+            transform: scale(1.1);
+        }
     </style>
 </head>
 <body>
-    <!-- ВОТ ТУТ ТЕПЕРЬ ВСТАВЛЕН ТВОЙ YOUTUBE ФОН -->
+    <!-- YouTube фон со звуком -->
     <div class="ytplayer" data-property="{
         videoURL: 'https://www.youtube.com/watch?v=WPxd8Ng9-x0',
         containment: 'body',
         autoPlay: true,
-        mute: true,
+        mute: false,        // ЗВУК ВКЛЮЧЕН (было true, стало false)
         startAt: 0,
         opacity: 1,
         loop: true,
@@ -123,13 +206,15 @@
         quality: 'hd1080',
         optimizeDisplay: true,
         stopMovieOnBlur: false,
-        realfullscreen: true
+        realfullscreen: true,
+        volume: 50           // Начальная громкость 50%
     }"></div>
 
     <!-- Затемняющий слой -->
     <div class="overlay"></div>
 
     <div class="container">
+        <h1>Связь</h1>
         <p>👋</p>
 
         <div class="social-links">
@@ -149,19 +234,103 @@
                 <i class="fab fa-vk"></i> ВКонтакте
             </a>
             
-             <a href="https://soundcloud.com/mishanyalirikov" target="_blank" class="social-link soundcloud">
+            <a href="https://soundcloud.com/mishanyalirikov" target="_blank" class="social-link soundcloud">
                 <i class="fab fa-soundcloud"></i> SoundCloud
             </a>
         </div>
+
+        <!-- ПОЛЗУНОК ГРОМКОСТИ -->
+        <div class="volume-control">
+            <button class="mute-btn" id="muteBtn">
+                <i class="fas fa-volume-high" id="volumeIcon"></i>
+            </button>
+            <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="50">
+            <span class="volume-percent" id="volumePercent">50%</span>
+        </div>
     </div>
 
-    <!-- Подключаем jQuery и YTPlayer в самом конце -->
+    <!-- Подключаем jQuery и YTPlayer -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/3.3.9/jquery.mb.YTPlayer.min.js"></script>
+    
     <script>
         $(document).ready(function() {
             // Активируем YouTube плеер
-            $(".ytplayer").YTPlayer();
+            const player = $(".ytplayer").YTPlayer();
+            
+            // Даем время на загрузку плеера
+            setTimeout(() => {
+                // Устанавливаем громкость при загрузке
+                const ytPlayer = $(".ytplayer").data("ytPlayer").player;
+                
+                if (ytPlayer && ytPlayer.setVolume) {
+                    ytPlayer.setVolume(50);
+                }
+            }, 1000);
+
+            // Работа с ползунком громкости
+            const volumeSlider = document.getElementById('volumeSlider');
+            const volumePercent = document.getElementById('volumePercent');
+            const volumeIcon = document.getElementById('volumeIcon');
+            const muteBtn = document.getElementById('muteBtn');
+            
+            let lastVolume = 50; // Запоминаем последнюю громкость
+
+            // Функция обновления иконки
+            function updateVolumeIcon(volume) {
+                if (volume == 0) {
+                    volumeIcon.className = 'fas fa-volume-mute';
+                } else if (volume < 30) {
+                    volumeIcon.className = 'fas fa-volume-low';
+                } else {
+                    volumeIcon.className = 'fas fa-volume-high';
+                }
+            }
+
+            // Изменение громкости ползунком
+            volumeSlider.addEventListener('input', function(e) {
+                const volume = parseInt(e.target.value);
+                volumePercent.textContent = volume + '%';
+                
+                // Обновляем иконку
+                updateVolumeIcon(volume);
+                
+                // Меняем громкость видео
+                const ytPlayer = $(".ytplayer").data("ytPlayer");
+                if (ytPlayer && ytPlayer.player && ytPlayer.player.setVolume) {
+                    ytPlayer.player.setVolume(volume);
+                }
+                
+                // Запоминаем последнюю громкость для mute
+                if (volume > 0) {
+                    lastVolume = volume;
+                }
+            });
+
+            // Кнопка mute/unmute
+            muteBtn.addEventListener('click', function() {
+                const ytPlayer = $(".ytplayer").data("ytPlayer");
+                if (!ytPlayer || !ytPlayer.player || !ytPlayer.player.getVolume) return;
+                
+                const currentVolume = ytPlayer.player.getVolume();
+                
+                if (currentVolume > 0) {
+                    // Выключаем звук
+                    lastVolume = currentVolume;
+                    ytPlayer.player.setVolume(0);
+                    volumeSlider.value = 0;
+                    volumePercent.textContent = '0%';
+                    updateVolumeIcon(0);
+                } else {
+                    // Включаем звук
+                    ytPlayer.player.setVolume(lastVolume);
+                    volumeSlider.value = lastVolume;
+                    volumePercent.textContent = lastVolume + '%';
+                    updateVolumeIcon(lastVolume);
+                }
+            });
+
+            // Можно добавить кнопки для переключения видео (по желанию)
         });
     </script>
 </body>
