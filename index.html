@@ -38,95 +38,45 @@
             pointer-events: none;
         }
 
-        /* КОНТРОЛЛЕР ГРОМКОСТИ В ЛЕВОМ ВЕРХНЕМ УГЛУ - УМЕНЬШЕННЫЙ И В РЯД */
-        .volume-controller {
+        /* КНОПКА ЗВУКА В ЛЕВОМ ВЕРХНЕМ УГЛУ - ТОЛЬКО КНОПКА */
+        .sound-button {
             position: fixed;
             top: 20px;
             left: 20px;
-            z-index: 3;
-            display: flex;
-            flex-direction: row;  /* В РЯД */
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(8px);
-            padding: 6px 12px;
-            border-radius: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            
-            /* Белое неоновое свечение */
-            box-shadow: 
-                0 0 15px rgba(255, 255, 255, 0.4),
-                0 0 30px rgba(255, 255, 255, 0.2),
-                inset 0 0 8px rgba(255, 255, 255, 0.3);
-        }
-
-        /* КНОПКА ЗВУКА - УМЕНЬШЕННАЯ */
-        .sound-button {
-            width: 36px;
-            height: 36px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
-            background: white;
-            border: none;
-            color: #222;
-            font-size: 16px;
+            background: rgba(20, 20, 30, 0.8);
+            backdrop-filter: blur(8px);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            color: white;
+            font-size: 20px;
             cursor: pointer;
+            z-index: 3;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             
             /* Белое неоновое свечение */
-            box-shadow: 0 0 15px white, 0 0 30px rgba(255, 255, 255, 0.5);
+            box-shadow: 
+                0 0 15px rgba(255, 255, 255, 0.5),
+                0 0 30px rgba(255, 255, 255, 0.3),
+                inset 0 0 8px rgba(255, 255, 255, 0.3);
         }
 
         .sound-button:hover {
             transform: scale(1.1);
-            box-shadow: 0 0 25px white, 0 0 50px rgba(255, 255, 255, 0.8);
+            background: rgba(40, 40, 50, 0.9);
+            box-shadow: 
+                0 0 25px rgba(255, 255, 255, 0.8),
+                0 0 50px rgba(255, 255, 255, 0.5);
+            border-color: rgba(255, 255, 255, 0.8);
         }
 
-        /* ПОЛЗУНОК ГРОМКОСТИ - УМЕНЬШЕННЫЙ */
-        .volume-slider {
-            width: 100px;
-            height: 4px;
-            -webkit-appearance: none;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 10px;
-            outline: none;
-        }
-
-        .volume-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 14px;
-            height: 14px;
-            background: white;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.2s;
-            border: 1px solid white;
-            
-            /* Белое свечение */
-            box-shadow: 0 0 15px white;
-        }
-
-        .volume-slider::-webkit-slider-thumb:hover {
-            transform: scale(1.2);
-            box-shadow: 0 0 25px white;
-        }
-
-        /* ПРОЦЕНТЫ ГРОМКОСТИ */
-        .volume-percent {
-            color: white;
-            font-weight: 600;
-            font-size: 0.8rem;
-            min-width: 35px;
-            text-align: center;
-            text-shadow: 0 0 8px white;
-        }
-
-        /* ПАНЕЛЬКА - БЕЛАЯ НЕОНОВАЯ */
+        /* ПАНЕЛЬКА - ТЕМНАЯ/ЧЕРНАЯ И ПОЛУПРОЗРАЧНАЯ */
         .container {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(10, 10, 15, 0.75);
             backdrop-filter: blur(12px);
             padding: 2rem;
             border-radius: 30px;
@@ -137,47 +87,48 @@
             position: relative;
             z-index: 2;
             
-            /* БЕЛОЕ НЕОНОВОЕ СВЕЧЕНИЕ */
-            border: 2px solid rgba(255, 255, 255, 0.8);
+            /* БЕЛОЕ НЕОНОВОЕ СВЕЧЕНИЕ НА ТЕМНОМ ФОНЕ */
+            border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 
-                0 0 30px rgba(255, 255, 255, 0.6),
-                0 0 60px rgba(255, 255, 255, 0.4),
-                0 0 90px rgba(255, 255, 255, 0.2),
-                inset 0 0 20px rgba(255, 255, 255, 0.5);
+                0 0 30px rgba(255, 255, 255, 0.3),
+                0 0 60px rgba(255, 255, 255, 0.15),
+                0 0 90px rgba(255, 255, 255, 0.1),
+                inset 0 0 20px rgba(255, 255, 255, 0.1);
             
             /* Анимация пульсации */
-            animation: whiteNeonPulse 3s ease-in-out infinite;
+            animation: whiteNeonPulse 4s ease-in-out infinite;
         }
 
         @keyframes whiteNeonPulse {
             0%, 100% {
                 box-shadow: 
-                    0 0 30px rgba(255, 255, 255, 0.6),
-                    0 0 60px rgba(255, 255, 255, 0.4),
-                    0 0 90px rgba(255, 255, 255, 0.2),
-                    inset 0 0 20px rgba(255, 255, 255, 0.5);
+                    0 0 30px rgba(255, 255, 255, 0.3),
+                    0 0 60px rgba(255, 255, 255, 0.15),
+                    0 0 90px rgba(255, 255, 255, 0.1),
+                    inset 0 0 20px rgba(255, 255, 255, 0.1);
             }
             50% {
                 box-shadow: 
-                    0 0 50px rgba(255, 255, 255, 0.9),
-                    0 0 100px rgba(255, 255, 255, 0.7),
-                    0 0 150px rgba(255, 255, 255, 0.5),
-                    inset 0 0 30px rgba(255, 255, 255, 0.8);
+                    0 0 50px rgba(255, 255, 255, 0.5),
+                    0 0 100px rgba(255, 255, 255, 0.3),
+                    0 0 150px rgba(255, 255, 255, 0.2),
+                    inset 0 0 30px rgba(255, 255, 255, 0.15);
             }
         }
 
         h1 {
-            color: #222;
+            color: white;
             margin-bottom: 0.3rem;
             font-size: 2rem;
-            text-shadow: 0 0 8px white;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            letter-spacing: 1px;
         }
 
         p {
-            color: #333;
+            color: rgba(255, 255, 255, 0.7);
             margin-bottom: 1.5rem;
             font-size: 1rem;
-            text-shadow: 0 0 4px white;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
         }
 
         .social-links {
@@ -190,7 +141,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 10px;
             padding: 0.8rem;
             border-radius: 40px;
             text-decoration: none;
@@ -198,30 +149,30 @@
             font-weight: 600;
             font-size: 1rem;
             transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(5px);
             text-shadow: 0 0 5px rgba(0,0,0,0.5);
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
         }
 
         .social-link:hover {
             transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 0 30px white;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
             filter: brightness(1.2);
-            border-color: white;
+            border-color: rgba(255, 255, 255, 0.4);
         }
 
         .social-link i {
             font-size: 1.2rem;
-            filter: drop-shadow(0 0 5px white);
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
         }
 
-        /* Индивидуальные цвета соцсетей */
-        .telegram { background: #0088cc; }
-        .youtube { background: #FF0000; }
-        .tiktok { background: #000000; }
-        .vkontakte { background: #4C75A3; }
-        .soundcloud { background: #FF7700; }
+        /* Индивидуальные цвета соцсетей с легкой прозрачностью */
+        .telegram { background: rgba(0, 136, 204, 0.8); }
+        .youtube { background: rgba(255, 0, 0, 0.8); }
+        .tiktok { background: rgba(0, 0, 0, 0.8); }
+        .vkontakte { background: rgba(76, 117, 163, 0.8); }
+        .soundcloud { background: rgba(255, 119, 0, 0.8); }
     </style>
 </head>
 <body>
@@ -247,24 +198,14 @@
     <!-- Затемняющий слой -->
     <div class="overlay"></div>
 
-    <!-- КОНТРОЛЛЕР ГРОМКОСТИ - В РЯД И УМЕНЬШЕННЫЙ -->
-    <div class="volume-controller">
-        <!-- КНОПКА ЗВУКА -->
-        <button class="sound-button" id="soundToggle">
-            <i class="fas fa-volume-high" id="soundIcon"></i>
-        </button>
-        
-        <!-- ПОЛЗУНОК ГРОМКОСТИ -->
-        <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="50">
-        
-        <!-- ПРОЦЕНТЫ -->
-        <span class="volume-percent" id="volumePercent">50%</span>
-    </div>
+    <!-- ТОЛЬКО КНОПКА ЗВУКА (ПОЛЗУНОК УБРАН) -->
+    <button class="sound-button" id="soundToggle">
+        <i class="fas fa-volume-high" id="soundIcon"></i>
+    </button>
 
-    <!-- ПАНЕЛЬКА -->
+    <!-- ПАНЕЛЬКА - ТЕМНАЯ И ПОЛУПРОЗРАЧНАЯ -->
     <div class="container">
-        <h1>Связь</h1>
-        <p>👋</p>
+        <h1>@psychodrain</h1>
 
         <div class="social-links">
             <a href="https://t.me/psychodrain" target="_blank" class="social-link telegram">
@@ -299,7 +240,8 @@
             $(".ytplayer").YTPlayer();
             
             let player = null;
-            let lastVolume = 50;
+            let isMuted = false;
+            let currentVolume = 50;
             
             // Ждем загрузки плеера
             function waitForPlayer() {
@@ -307,7 +249,13 @@
                 if (ytPlayer && ytPlayer.player) {
                     player = ytPlayer.player;
                     console.log("Player loaded!");
-                    initControls();
+                    
+                    // Устанавливаем начальную громкость
+                    if (player.setVolume) {
+                        player.setVolume(50);
+                    }
+                    
+                    initButton();
                 } else {
                     console.log("Waiting for player...");
                     setTimeout(waitForPlayer, 500);
@@ -316,82 +264,41 @@
             
             waitForPlayer();
             
-            function initControls() {
+            function initButton() {
                 const soundToggle = document.getElementById('soundToggle');
                 const soundIcon = document.getElementById('soundIcon');
-                const volumeSlider = document.getElementById('volumeSlider');
-                const volumePercent = document.getElementById('volumePercent');
                 
-                if (!player || !player.setVolume) {
-                    console.error("Player not ready");
-                    return;
-                }
+                if (!player) return;
                 
-                // Устанавливаем начальную громкость
-                player.setVolume(50);
-                console.log("Volume set to 50");
-                
-                // Функция обновления иконки
-                function updateIcon(volume) {
-                    if (volume == 0) {
-                        soundIcon.className = 'fas fa-volume-mute';
-                    } else if (volume < 30) {
-                        soundIcon.className = 'fas fa-volume-low';
-                    } else {
-                        soundIcon.className = 'fas fa-volume-high';
-                    }
-                }
-                
-                // Ползунок громкости - ТЕПЕРЬ РАБОТАЕТ!
-                volumeSlider.addEventListener('input', function(e) {
-                    const volume = parseInt(e.target.value);
-                    volumePercent.textContent = volume + '%';
-                    
-                    if (player && player.setVolume) {
-                        player.setVolume(volume);
-                        console.log("Volume changed to:", volume);
-                    }
-                    
-                    updateIcon(volume);
-                    
-                    if (volume > 0) {
-                        lastVolume = volume;
-                    }
-                });
-                
-                // Кнопка mute
+                // Кнопка mute/unmute
                 soundToggle.addEventListener('click', function() {
                     if (!player || !player.getVolume) return;
                     
-                    const currentVolume = player.getVolume();
-                    console.log("Current volume:", currentVolume);
+                    const vol = player.getVolume();
                     
-                    if (currentVolume > 0) {
+                    if (vol > 0) {
                         // Выключаем звук
-                        lastVolume = currentVolume;
+                        currentVolume = vol;
                         player.setVolume(0);
-                        volumeSlider.value = 0;
-                        volumePercent.textContent = '0%';
-                        updateIcon(0);
+                        soundIcon.className = 'fas fa-volume-mute';
                         console.log("Muted");
                     } else {
                         // Включаем звук
-                        player.setVolume(lastVolume);
-                        volumeSlider.value = lastVolume;
-                        volumePercent.textContent = lastVolume + '%';
-                        updateIcon(lastVolume);
-                        console.log("Unmuted to:", lastVolume);
+                        player.setVolume(currentVolume);
+                        soundIcon.className = 'fas fa-volume-high';
+                        console.log("Unmuted to:", currentVolume);
                     }
                 });
                 
-                // Синхронизация
+                // Следим за состоянием звука
                 setInterval(() => {
                     if (player && player.getVolume) {
                         const vol = player.getVolume();
-                        if (vol !== parseInt(volumeSlider.value)) {
-                            volumeSlider.value = vol;
-                            volumePercent.textContent = vol + '%';
-                            updateIcon(vol);
+                        if (vol === 0) {
+                            soundIcon.className = 'fas fa-volume-mute';
+                        } else {
+                            soundIcon.className = 'fas fa-volume-high';
+                            currentVolume = vol;
                         }
                     }
                 }, 200);
