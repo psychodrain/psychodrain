@@ -6,6 +6,8 @@
     <title>@psychodrain</title>
     <!-- Подключаем Font Awesome для красивых иконок соцсетей -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Подключаем CSS для YTPlayer -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/3.3.9/css/jquery.mb.YTPlayer.min.css">
     <style>
         /* Стили для страницы */
         * {
@@ -23,29 +25,6 @@
             position: relative;
         }
 
-        /* Видео на весь экран */
-        .video-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-
-        .video-background video {
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            object-fit: cover;
-        }
-
         /* Затемнение поверх видео для лучшей читаемости текста */
         .overlay {
             position: fixed;
@@ -54,7 +33,8 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.5); /* Полупрозрачный черный слой */
-            z-index: -1;
+            z-index: 1;
+            pointer-events: none; /* Чтобы не мешало нажимать на ссылки */
         }
 
         .container {
@@ -68,6 +48,8 @@
             width: 90%;
             margin: 20px;
             border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            z-index: 2;
         }
 
         h1 {
@@ -126,17 +108,24 @@
     </style>
 </head>
 <body>
-    <!-- Видео фон -->
-    <div class="video-background">
-        <!-- Используем видео с сервера, которое точно работает -->
-        <video autoplay muted loop playsinline>
-            <!-- Пробуем разные форматы -->
-            <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4">
-            <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm" type="video/webm">
-            <!-- Резервный текст, если видео не грузится -->
-            Твой браузер не поддерживает видео фон.
-        </video>
-    </div>
+    <!-- ВОТ ТУТ ТЕПЕРЬ ВСТАВЛЕН ТВОЙ YOUTUBE ФОН -->
+    <div class="ytplayer" data-property="{
+        videoURL: 'https://www.youtube.com/watch?v=WPxd8Ng9-x0',
+        containment: 'body',
+        autoPlay: true,
+        mute: true,
+        startAt: 0,
+        opacity: 1,
+        loop: true,
+        showControls: false,
+        showYTLogo: false,
+        addRaster: false,
+        quality: 'hd1080',
+        optimizeDisplay: true,
+        stopMovieOnBlur: false,
+        realfullscreen: true
+    }"></div>
+
     <!-- Затемняющий слой -->
     <div class="overlay"></div>
 
@@ -166,5 +155,15 @@
             </a>
         </div>
     </div>
+
+    <!-- Подключаем jQuery и YTPlayer в самом конце -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/3.3.9/jquery.mb.YTPlayer.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Активируем YouTube плеер
+            $(".ytplayer").YTPlayer();
+        });
+    </script>
 </body>
 </html>
