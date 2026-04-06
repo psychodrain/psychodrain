@@ -87,6 +87,9 @@ function init() {
         document.getElementById('header').classList.toggle('scrolled', window.scrollY > 20);
     });
     setupPhoneInput();
+    if (window.location.hash === '#admin') {
+        showPage('admin');
+    }
 }
 
 // ===== PAGE NAVIGATION =====
