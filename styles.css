@@ -485,3 +485,16 @@ textarea.form-input { resize: vertical; min-height: 70px; }
     .about-grid, .contacts-grid { grid-template-columns: 1fr; }
     .about-stats { grid-template-columns: repeat(2, 1fr); }
 }
+    .admin-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+    .admin-section {
+    margin-top: 100px;
+    padding-bottom: 60px;
+}
