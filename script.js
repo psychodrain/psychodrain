@@ -661,3 +661,11 @@ document.getElementById('productModal').addEventListener('click', (e) => {
 document.getElementById('checkoutModal').addEventListener('click', (e) => {
     if (e.target.id === 'checkoutModal') closeCheckout();
 });
+
+function showAdmin() {
+    if (window.location.pathname.includes('index.html') || window.location.pathname.endsWith('/')) {
+        showPage('admin');
+    } else {
+        window.location.href = 'index.html#admin';
+    }
+}
