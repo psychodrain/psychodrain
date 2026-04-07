@@ -378,3 +378,8 @@ textarea.form-input { resize: vertical; min-height: 70px; }
     .pd-related .products-grid { grid-template-columns: 1fr; }
     .nav-link:not(.cart-btn) { display: none; } /* На мобильных скрываем текст меню, оставляем корзину */
 }
+
+.admin-page-wrapper {
+    margin-top: 72px;
+    min-height: calc(100vh - 72px - 200px);
+}
