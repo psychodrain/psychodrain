@@ -207,7 +207,7 @@ function handleAdminLogin(event){
     // ЛОГИН И ПАРОЛЬ
     if (loginInput.value === 'admin' && passInput.value === 'admin123') {
         closeAuthModal();
-        window.location.href = 'admin.html'; // Просто перекидываем на админку
+        window.location.href = 'admin.html';
     } else {
         if (errorMsg) { errorMsg.style.display = 'block'; errorMsg.textContent = 'Неверный логин или пароль'; }
         else { alert('Неверный логин или пароль'); }
