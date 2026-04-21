@@ -29,7 +29,6 @@ const products = [
       fullDesc: "Великолепный бархат насыщенного изумрудного оттенка.",
       image: "https://image.qwenlm.ai/public_source/76bb5dd4-4f72-4671-b805-d03a52364dad/1b2f8ef85-13d9-4acf-ac6c-529961460d18.png",
       gallery: ["https://image.qwenlm.ai/public_source/76bb5dd4-4f72-4671-b805-d03a52364dad/1b2f8ef85-13d9-4acf-ac6c-529961460d18.png"],
-      badge: "new", rating: 4.6, reviews: 43,
       specs: { "Состав": "Полиэстер/Вискоза", "Плотность": "280 г/м²", "Ширина": "150 см" },
       care: ["Химчистка", "Не гладить по ворсу"]
     },
@@ -131,7 +130,6 @@ function openProductModal(productId) {
                 <span class="pd-category">${currentProduct.categoryName}</span>
                 ${currentProduct.badge ? `<span class="product-badge badge-${currentProduct.badge}" style="position:static;display:inline-block;margin-left:8px;">${getBadgeText(currentProduct.badge)}</span>` : ''}
                 <h2 class="pd-name">${currentProduct.name}</h2>
-                <div class="pd-rating"><span class="pd-stars">${getStarsHtml(currentProduct.rating)}</span><span>${currentProduct.rating} (${currentProduct.reviews} отзывов)</span></div>
                 <div class="pd-price-block"><span class="pd-price">${currentProduct.price} ₽</span><span class="pd-price-unit">за 1 кг</span></div>
                 <p class="pd-desc">${currentProduct.fullDesc}</p>
                 <div class="pd-section-title">Выберите вес:</div>
